@@ -1,31 +1,33 @@
 # Build with CoCo: SaaS Seat Sweeper
 
-In this lab, you'll build SaaS Seat Sweeper, an internal Finance and IT application that identifies inactive SaaS licenses, shows contract context, and flags assignments for reclamation review. You'll start with a prepared read-only application and use Cortex Code to deploy it, add a meaningful feature, and verify the change in a second deployment.
+In this lab, you'll build SaaS Seat Sweeper, an internal Finance and IT application for finding unused software licenses. You'll start with a working read-only app, deploy it to Snowflake, add a feature that flags licenses for review, and deploy the updated version.
 
-## What you will do
+## What you'll do
 
-- **Understand and prepare the data contract.** Inspect how the synthetic dataset is built, identify the assignment grain and join keys, and trace a displayed metric through the governed views. Check the prepared data rather than treating it as a black box.
-- **Ship the first version.** Review deployment settings, approve the target, and open your own authenticated application endpoint.
-- **Challenge the access model.** Check what app-entry permissions and SQL policies actually prove about who can see or change data.
-- **Build and verify a feature.** Ask CoCo for a plan, review the changes, test reclamation, and deploy the updated application.
-- **Operate and evaluate.** Inspect logs and cost boundaries, watch a separate business-question agent demo, compare responsibilities with your current stack, and clean up.
+- Explore the sample data and see how it becomes an app metric.
+- Deploy the starter and open your own application URL.
+- Try the access controls with a restricted test user.
+- Use CoCo to add and test the license-review feature.
+- Redeploy, check logs and costs, and clean up.
 
-## How you will work with CoCo
+You'll also watch the facilitator ask a business-question agent about the same data and contracts. That agent is separate from CoCo and isn't something you need to build during this lab.
 
-You will practice **inspect, propose, approve, act, verify** throughout the lab. The prompt cards provide bounded starting points, not answers to accept uncritically. Review proposed actions, inspect source and tool evidence, and use focused follow-ups when something is missing or wrong.
+## How to work through the lab
 
-Each person works individually in their own prepared account and application project. You direct CoCo, review its proposals, and verify the results yourself. Take the full scheduled break before feature work. Manual commands and recovery checkpoints are available when needed; record when you use them.
+Each person works individually. Open the repository root in CoCo and keep application changes in `starter-app/`.
 
-CoCo is your development and operations assistant. The facilitator's Cortex Agent is a separate demonstration of answering business questions at runtime; building that agent is not part of the participant path.
+Each exercise gives you a goal, a prompt to try, and a few things to check. Review what CoCo proposes before letting it make changes. Then try the result yourself. The workflow is **inspect, propose, approve, act, verify**.
 
-## What is prepared, and what is yours
+Use the manual commands if you need them. If you get stuck, follow the recovery note or ask the facilitator; you don't need to solve every environment issue on your own.
 
-The administrator prepares the eligible account, synthetic data, governed views, and approved prerequisites before the timer. In Module 01, you inspect that build recipe and validate a baseline before your first deployment. The [dataset build guide](dataset-guide.md) explains the source tables, seed process and adaptation to your own data. You receive the application source, but your participant deployment and endpoint do not exist yet. You perform both deployments and the feature work.
+## Before you start
 
-This lab is designed for application developers and data engineers. Both follow the same path. You do not need to scaffold an entire app or manually build its container infrastructure.
+For this version of the lab, the administrator prepares the account, sample data, governed views, and deployment prerequisites before the session. Your application is not deployed for you. You'll explore the data in Module 01 and perform both deployments yourself.
 
-By the end, your evidence should include your first endpoint, a reviewed feature surviving redeployment, tested access boundaries, and a cleanup or explicit retention record. Flagging a license requests review: it does not cancel a vendor seat or prove realized savings.
+Keep your assigned account connection handy. Use only synthetic workshop data, and never paste passwords, tokens, or private keys into prompts or source files.
+
+Flagging a license requests a review. It doesn't cancel a vendor subscription or prove that money has been saved.
 
 ## Three-hour agenda
 
-The schedule below includes the ten-minute break and ten-minute cleanup. Times are elapsed from the session start. The first endpoint target is minute 65; account preparation happens before the session. This introduction is a navigation page, not an additional timed exercise.
+The schedule includes a ten-minute break and ten minutes for cleanup. Aim to open your first deployed app by minute 65. Start with Module 00 below.

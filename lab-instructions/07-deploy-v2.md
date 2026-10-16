@@ -1,20 +1,22 @@
 # 07 - Deploy version two
 
-Use CoCo to review release readiness, then verify the approved feature at the authenticated deployed endpoint.
+Deploy your updated app and check that Reclaim works at the Snowflake-hosted URL.
 
 **Time limit:** 20 minutes, 01:55-02:15. Use 2 minutes for review/approval, 10 for deployment, and 8 for endpoint verification/recovery.
 
 ## Action
 
-Bring your actual diff, local gates and version-one evidence; do not equate a generated feature with a tested release.
+Have your diff and local test results ready, along with the URL and version from your first deployment.
 
-[Prompt CoCo: Review readiness and propose the second deployment](../coco-prompts/plan-second-deploy.md)
+[Prompt CoCo: Check that I'm ready to redeploy](../coco-prompts/plan-second-deploy.md)
 
 ## Your decision
 
-Confirm the same participant account/service/role and unchanged manifest target. Keep the restricted service grant revoked: the feature executes writes under owner's rights. Approve redeployment **and separately** the bounded endpoint proof: exact authenticated endpoint, numeric `emp_id`/`asset_id`, one designated request executor, and identical replay. Use a different assignment if the separately approved local proof already changed one. Only the designated actor sends requests; CoCo must not send a second request while the participant clicks. An uncertain response requires a stored-state check, not a blind retry or a new assignment.
+First, check that the account and app name still match your first deployment, then approve redeployment. Keep the restricted user's app grant revoked.
 
-[Prompt CoCo: Deploy the approved feature and verify remote evidence](../coco-prompts/deploy-verify-second-version.md)
+Approve the live test separately: name the authenticated URL, numeric `emp_id` and `asset_id`, and who will send the request. Choose an assignment that hasn't already been flagged. Either you click or CoCo sends the request, not both. Repeat that same request once to check the no-op. If a response is unclear, inspect stored state before retrying; don't pick another assignment.
+
+[Prompt CoCo: Deploy and check my updated app](../coco-prompts/deploy-verify-second-version.md)
 
 Compare DESCRIBE `source` with the first deployment: "version two" is not a guaranteed `VERSION$2`. Open the returned authenticated URL; check Reclaim, Inventory/contract drawer, navigation and static assets after remote build.
 
@@ -22,7 +24,7 @@ With Developer Tools Network open, click Reclaim once and inspect `/api/reclaim`
 
 ## Expected evidence
 
-Record both actual versions, deployment duration, authenticated URL, response counts 1 then 0, stored `Flagged` state and refreshed Licenses/Overview totals. Replay must not decrement opportunity again. Use module 06's approved read-only stored-state check with the selected numeric IDs. Distinguish deployed proof from local/mock tests; label checkpoint-assisted or blocked results.
+Save the new version, URL and deployment time. Confirm response counts of 1 then 0, a stored `Flagged` status, and matching totals on Licenses and Overview. The repeated request must not lower opportunity again. Note any checkpoint used or test you couldn't finish.
 
 ## Recovery
 

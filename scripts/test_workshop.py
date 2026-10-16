@@ -73,6 +73,30 @@ class GuideTests(unittest.TestCase):
         source.write_text(source.read_text() + '\nUpdated introduction.\n')
         self.assertNotEqual(document, build(self.root))
 
+    def test_opening_prompt_has_bounded_orientation_scope(self):
+        source = ROOT / "lab-instructions/00-overview.md"
+        prompt = canonical_prompt(ROOT, source, "../coco-prompts/workshop-orient.md")["text"]
+        for boundary in (
+            "Read only introduction.md and agenda.json",
+            "reuse them",
+            "Do not list directories",
+            "read application code or other modules",
+            "report its exact path and stop rather than searching",
+            "at most 180 words",
+            "exactly four bullets",
+            "not verified application behavior",
+            "Stop after the briefing",
+        ):
+            self.assertIn(boundary, prompt)
+        self.assertNotIn("starter's entry points", prompt)
+        document = build(ROOT)
+        tree, errors = validate_html(document)
+        self.assertEqual(errors, [])
+        cards = [node for node in tree.iter("section")
+                 if node.get("data-source") == "coco-prompts/workshop-orient.md"]
+        self.assertEqual(len(cards), 1)
+        self.assertEqual(cards[0].find("./pre/code").text, prompt)
+
     def test_exact_prompt_and_provenance(self):
         prompt = '  Preserve indentation & <tags>.\n\n"Quotes", Unicode: café.\nTrailing spaces.  \n'
         path = self.root / "coco-prompts/exercise.md"

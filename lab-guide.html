@@ -39,13 +39,13 @@
       "dataSources": [
         {
           "path": "lab-instructions/00-overview.md",
-          "sha256": "6cac15849cf2d59672f8e2b205680e349fce12b86f78a84f04ba2deaddc706df",
+          "sha256": "ab0ffe34288a617371e194cd20a99902b9286b00b0ba1d8adac08936dbb9633d",
           "type": "file"
         },
         {
           "path": "coco-prompts/workshop-orient.md",
-          "promptSha256": "09cb84ca806f0b862325047171c980438ae70307514450d4e12be4d88d784c8b",
-          "sha256": "84840c20ad06d165c9fab4ba3f062f3562b0cc34cdcc155a8f54a8a769189eb9",
+          "promptSha256": "8f1a6f2c815ee90c5f03da8d8b2ff6f192c04b76369df12d7ee02806c47c9f0e",
+          "sha256": "dbd4c80450083af4e51990c4d6684e6ec25350fb66f7307f1752d5ff9f3d4b35",
           "type": "file"
         }
       ],
@@ -477,10 +477,20 @@
 <section class="step" id="00-overview" data-minutes="10" aria-labelledby="title-00-overview"><header class="step-header"><span class="step-tag">Module 00</span><h1 class="step-title" id="title-00-overview" tabindex="-1">Business workflow and outcome</h1><div class="step-outcome"><p>Learn to direct and verify CoCo while taking a prepared read-only app through two deployments and one bounded business feature.</p></div><div class="step-duration">00:00 - 00:10 | 10 minutes</div><p class="interaction-pattern">Inspect / propose / approve / act / verify</p></header><div class="module-content"><span id="00-overview--00-business-workflow-and-outcome"></span>
 <p class="time-guidance">Use 3 minutes for the workflow, 4 for orientation, and 3 for your evidence baseline. The complete lab is 180 minutes, including break and cleanup; the FAQ is untimed.</p><h2 id="00-overview--action">Action</h2>
 <p>Watch the finished workflow: inspect inactive paid licenses, read a contract, flag an assignment for review, and inspect remaining opportunity. Flagging is not vendor cancellation or realized savings. Annualized opportunity is remaining monthly inactive-license cost multiplied by 12, not a forecast.</p>
-<section aria-label="Prompt CoCo: Understand the lab and what to verify" class="prompt-card" data-prompt-sha256="09cb84ca806f0b862325047171c980438ae70307514450d4e12be4d88d784c8b" data-sha256="84840c20ad06d165c9fab4ba3f062f3562b0cc34cdcc155a8f54a8a769189eb9" data-source="coco-prompts/workshop-orient.md"><p class="prompt-label">Prompt CoCo</p><h3 class="prompt-title">Understand the lab and what to verify</h3><pre class="prompt-text"><code>Help me understand this lab and how to direct and verify CoCo while building Seat Sweeper from the prepared starter. Read agenda.json, the overview, and the starter's entry points. Explain the business outcome, what is already prepared, and what I will build and verify. Distinguish flagging a license for review from cancelling it or realizing savings.
+<p>Use this for a quick briefing, not an application audit. CoCo should read only <code>introduction.md</code> and <code>agenda.json</code>, then return four short bullets. Reviewing the starter and its data path belongs in Module 01.</p>
+<section aria-label="Prompt CoCo: Get a quick lab briefing" class="prompt-card" data-prompt-sha256="8f1a6f2c815ee90c5f03da8d8b2ff6f192c04b76369df12d7ee02806c47c9f0e" data-sha256="dbd4c80450083af4e51990c4d6684e6ec25350fb66f7307f1752d5ff9f3d4b35" data-source="coco-prompts/workshop-orient.md"><p class="prompt-label">Prompt CoCo</p><h3 class="prompt-title">Get a quick lab briefing</h3><pre class="prompt-text"><code>Give me a quick briefing for this individual hands-on lab, not a codebase review.
 
-Outline an inspect, propose, approve, act, verify workflow within the existing 180 minutes. Explain where I need to review or approve actions and what evidence to record in the scorecard. I am working individually in my own prepared account and application project. Explain how to pause and independently check your results before approving the next action. Do not edit files, connect to an account, scaffold an app, or build an agent. Check which tools this delivery surface actually exposes; never assume a tool or parallel-agent capability exists. Use sequential work as the default.
-</code></pre><p class="prompt-source">Source: coco-prompts/workshop-orient.md | SHA-256 84840c20ad06</p></section>
+Read only introduction.md and agenda.json from the repository root, once each. If their contents are already in this conversation, reuse them. Do not list directories, search the repository, follow links, read application code or other modules, delegate to subagents, or probe tools/connections. If either file is missing, report its exact path and stop rather than searching.
+
+In at most 180 words, give me exactly four bullets:
+- What I will build, and why flagging a seat is not cancellation or realized savings.
+- What is prepared versus what I will do myself.
+- The main phases of the 180-minute lab, including the break and cleanup; do not repeat every agenda row.
+- How I will use inspect, propose, approve, act, verify, and my next step: open Module 01.
+
+Describe these as the lab's stated design, not verified application behavior. No edits, commands, account access, implementation plan, or additional investigation. Stop after the briefing and wait for my next prompt. Source inspection and technical verification belong to the later exercises.
+</code></pre><p class="prompt-source">Source: coco-prompts/workshop-orient.md | SHA-256 dbd4c8045008</p></section>
+<p>If CoCo starts exploring code or other modules, stop that run and use the bounded prompt above. You can also read the introduction yourself and continue; do not spend this slot waiting for a full repository review.</p>
 <section aria-labelledby="00-overview--your-decision" class="semantic-panel panel-decision"><h2 id="00-overview--your-decision">Your decision</h2>
 <p>You work individually in your own prepared account and application project. Pause to review each proposal and its evidence before approving the next action. Your repeated workflow is <strong>inspect, propose, approve, act, verify</strong>. Confirm scope before each action, challenge unsupported claims, and record actual evidence. CoCo's available tools vary by delivery surface: if execution is unavailable, use the manual fallback and return the result. Parallel read-only reviews are optional only after support is verified; sequential review is sufficient.</p>
 <p>Open the unpacked package root in CoCo; keep application work scoped to <code>starter-app/</code>, not <code>reference-app/</code>. This lets CoCo read the agenda and reviewer checklists without guessing parent paths. Full-app scaffolding and building a new agent are not timed prerequisites. The <a href="#06-build-reclamation">feature module</a> separates planning, implementation and proof.</p>

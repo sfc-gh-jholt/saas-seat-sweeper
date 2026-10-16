@@ -1,6 +1,6 @@
 # 08 - Operate what you deployed
 
-Ask CoCo for an evidence-backed operational assessment without letting diagnosis silently become remediation.
+Find your app's logs and settings, and understand what can keep running after you close the browser.
 
 **Time limit:** 15 minutes, 02:15-02:30. Use 5 minutes for status/logs, 5 for costs/settings, and 5 for recovery/version ownership.
 
@@ -8,11 +8,11 @@ Ask CoCo for an evidence-backed operational assessment without letting diagnosis
 
 Inspect the actual participant service using the already-approved connection and role.
 
-[Prompt CoCo: Inspect operations and separate facts from gaps](../coco-prompts/inspect-operations.md)
+[Prompt CoCo: Show my app's status, logs and cost settings](../coco-prompts/inspect-operations.md)
 
 ## Your decision
 
-Check the evidence before accepting a health claim. Choose a follow-up owner, not a configuration change: this slot authorizes read-only inspection only. Do not approve speculative rollback, suspension changes or account-wide telemetry to make a check pass.
+This is a read-only exercise. Review what CoCo finds and note any follow-up needed. Don't change suspension settings, enable account-wide telemetry or attempt a rollback here.
 
 Capture `status`, `url`, source package/version, `is_upgrading`, `auto_suspend_secs` and `auto_resume`. A zero suspension interval disables auto-suspend. A blank log result does not prove health; not every request or SQL statement is necessarily logged. Use this CLI's `--last`, not guessed newer flags or Native App commands.
 
@@ -22,7 +22,11 @@ Capture `status`, `url`, source package/version, `is_upgrading`, `auto_suspend_s
 
 ## Expected evidence
 
-Record actual status/version/settings, a log observation or failure, earlier version and named incident/cost owner. Separate observed facts, missing evidence and proposed follow-up. This live-log check does not prove configured event-table tracing, instrumentation, retention, alerts or an APM dashboard. Measure resumption/cold starts separately in the target account.
+Record the status, version, suspension settings and one useful log entry or error. Note who owns any follow-up and ongoing costs. Finding logs is a starting point; it doesn't mean tracing, alerts or retention have been configured.
+
+## Why this matters
+
+Code rollback does not reverse database writes. App runtime, warehouse compute, AI and retained storage can have separate costs. Usage history may arrive late, so an empty result isn't proof of zero spend.
 
 ## Recovery
 

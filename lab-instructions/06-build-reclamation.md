@@ -1,6 +1,6 @@
 # 06 - Build reclamation with CoCo
 
-Direct a small business feature through a plan, approved local implementation and independent proof instead of pasting a complete solution.
+Add a Reclaim button that flags an inactive license for review, then test it.
 
 **Time limit:** 25 minutes, 01:30-01:55. Use 3 minutes for the plan, 12 for implementation/review, 5 for local proof, and 5 for approved live proof or recovery. Implementation cutoff: minute 110.
 
@@ -8,19 +8,19 @@ Direct a small business feature through a plan, approved local implementation an
 
 Work in `starter-app/` with the participant connection selected, never Snowhouse. The goal is to flag one inactive paid assignment for review, not cancel a vendor license or claim realized savings.
 
-[Prompt CoCo: Propose the smallest reclamation feature without edits](../coco-prompts/plan-reclamation.md)
+[Prompt CoCo: Plan the Reclaim feature](../coco-prompts/plan-reclamation.md)
 
 ### Your decision
 
-Review proposed files, behavior and tests against the checklist below. Approve only the bounded local implementation; preserve manifests, dependencies, lockfile and authorization. This does **not** authorize live SQL, connected POST requests or deployment.
+Review the proposed files and tests using the technical checklist below. Approve local edits and tests only. Keep the manifest, dependencies and access model unchanged. Database writes, requests to a connected endpoint and deployment need separate approval.
 
-[Prompt CoCo: Implement our reviewed plan and run local tests](../coco-prompts/implement-reclamation.md)
+[Prompt CoCo: Build the feature and run local tests](../coco-prompts/implement-reclamation.md)
 
 ### Your decision
 
-Inspect the actual diff, not just CoCo's summary. Reject unrelated changes. Accept the local test scope for a challenge pass; if a fix is needed, review that proposal before another implementation. Live writes remain unapproved.
+Open the diff and test output. Check that only the agreed feature changed. If CoCo finds another fix, review it before continuing. Don't test against live data yet.
 
-[Prompt CoCo: Challenge the diff and separate local proof from live proof](../coco-prompts/challenge-reclamation.md)
+[Prompt CoCo: Review the changes and test results](../coco-prompts/challenge-reclamation.md)
 
 ### Your decision
 
@@ -32,7 +32,7 @@ After that separate approval, record the chosen inactive paid assignment's IDs, 
 
 ## Expected evidence
 
-Keep **local** evidence (changed files, focused tests, explicit type check and build) separate from **live** evidence (first count 1, replay 0, invalid-input 4xx, stored `Flagged`, refreshed totals). Monthly remaining opportunity should fall once by the seat cost; annualized opportunity by 12 times that cost. HTTP 200 alone proves neither success nor no-op. Label checkpoint use and any missing proof.
+Save the local test/type-check/build results. For the approved live check, confirm the first request changes one assignment, the repeated request changes none, and invalid input returns 4xx. Check `Flagged` in the database and refreshed totals in the app. Monthly opportunity falls once by the seat cost; annualized opportunity falls by 12 times that amount. A 200 response alone isn't enough.
 
 ## Recovery
 
@@ -81,6 +81,14 @@ python3 "$LAB_ROOT/checkpoints/apply_writeback.py" --target "$LAB_ROOT/starter-a
 ```
 
 ## Checklist
+
+- [ ] I reviewed the feature diff and local tests passed.
+- [ ] The approved live check flags one assignment; repeating it makes no further change.
+- [ ] Database state and refreshed app totals agree, or I recorded what is still untested.
+
+## Technical checklist
+
+Use this when reviewing CoCo's implementation; it is not a second exercise.
 
 - [ ] POST `/api/reclaim` validates JSON object and positive safe-integer `emp_id`/`asset_id` before querying; malformed JSON, null, arrays and invalid fields return 400.
 - [ ] SQL uses bound IDs, never interpolation; exact assignment plus `status = 'Inactive'` guards the transition to `Flagged`, making repeats idempotent.

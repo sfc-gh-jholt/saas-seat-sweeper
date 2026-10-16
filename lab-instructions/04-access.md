@@ -1,6 +1,6 @@
 # 04 - Prove access boundaries
 
-Challenge CoCo's authorization reasoning, then prove app entry and direct-SQL permissions as separate claims.
+Try two separate checks: who can open the app, and what a restricted user can query directly.
 
 **Time limit:** 15 minutes, 01:05-01:20. Use 3 minutes for the claim/plan, 6 for app entry, 4 for SQL proof, and 2 for recording/restoration.
 
@@ -8,23 +8,23 @@ Challenge CoCo's authorization reasoning, then prove app entry and direct-SQL pe
 
 This app uses **owner's rights**, not per-visitor row filtering. An admitted visitor sees service-identity rows; denied direct SQL does not prove that visitor cannot invoke an owner's-rights write endpoint later.
 
-[Prompt CoCo: Challenge the restricted-visitor claim](../coco-prompts/challenge-access.md)
+[Prompt CoCo: Explain the two access checks](../coco-prompts/challenge-access.md)
 
 ## Your decision
 
-Check code/policy citations and the administrator-prepared restricted identity. Approve only your exact service's USAGE grant/revoke experiment, the specified restricted read and no-row write-denial probe. The restricted user must lack administrative, ownership, inherited or alternate-role access. ACCOUNTADMIN cannot prove denial; switching a worksheet role does not change browser identity.
+Use the separate restricted test user supplied by the administrator. Review and approve the grant/revoke for your app only, plus the read and no-row write test below. An administrator account cannot prove access is denied, and changing a worksheet role doesn't change who is signed into the browser.
 
-[Prompt CoCo: Guide the approved entry and SQL permission proofs](../coco-prompts/prove-access.md)
+[Prompt CoCo: Walk me through the approved access checks](../coco-prompts/prove-access.md)
 
 Use an isolated browser profile and clean restricted-user session for each entry check: denied before grant, allowed after grant, denied after revoke. Existing sessions may not invalidate instantly; record actual behavior. If entry persists, stop for administrator review of direct/inherited grants, not broad revocation.
 
 Direct SQL should show Engineering-only governed-view rows. The no-row UPDATE must fail for the intended access-control reason, not missing warehouse/setup. A successful zero-row update is a **failed negative test**. Keep the exact service grant revoked before write-back development.
 
-The demo grants restricted users raw-table SELECT and defaults permissively for other roles. This proves only the named view/role boundary, not tenant isolation. Caller-aware authorization needs separate design and tests, not a helper flag change.
+The supplied setup gives the restricted role access to selected views, not RAW tables. The department policy denies other primary roles by default. Shared contract and inventory views are not department-filtered, so this is not complete tenant isolation.
 
 ## Expected evidence
 
-Record restricted username/role, clean-session denied/allowed/denied results, direct-SQL departments, actual write-denial error and final revoked grant. Distinguish observed results from CoCo's prediction and the owner's-rights UI limitation.
+Record whether browser entry was denied, allowed, then denied again. Save the restricted SQL role, returned departments and permission error. Confirm the app grant is revoked before continuing. These results don't establish per-visitor filtering inside the app.
 
 ## Recovery
 

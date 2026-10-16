@@ -2,6 +2,14 @@
 
 Complete this before the participant timer. A provisioned account with ACCOUNTADMIN is a starting point, not a ready workshop. This runbook is authored and statically checked only; target-account execution and the 180-minute rehearsal are still pending.
 
+## Notebook-track preparation
+
+For `START_HERE.ipynb`, participants execute SQL 01–03 and the data checks during the lab. Do not also perform sections 4–5 below in their accounts. Those sections remain the prepared-data HTML-track runbook and recovery reference.
+
+Before the notebook session, verify a local Python kernel with `snowflake-connector-python` and `ipykernel`, interactive `input()` support, the assigned named connection, and the `snowflake-apps` skill. The notebook's offline parser tests used Connector 4.7.3 and nbformat 5.11.1; this is not a live kernel/deployment certification. The profile should omit database/schema/warehouse defaults until bootstrap; the helper also overrides them to empty context. Do not store credentials in the notebook.
+
+Leave the fixed database, warehouse and role names unused. Prepare the restricted human identity beforehand, then assign its workshop role after participant SQL 03. If custom build egress depends on the workshop schema, complete the separately approved integration setup after SQL 01–03 and before deployment configuration. Do not silently pre-create the workshop schema to satisfy that dependency. Confirm this ordering fits a timed rehearsal; if it does not, select the prepared-data track rather than mixing both.
+
 ## 1. Eligibility is a separate go/no-go gate
 
 Confirm the selected account is eligible for Snowflake App Runtime, its region and edition support the required features, and the administrator has completed the account's Apps enablement/setup experience. Check current product availability and the account's actual setup result; ACCOUNTADMIN alone does not enable an unavailable feature. Confirm row access policies are supported as well. Do not treat a fresh trial account or a successful SQL login as eligibility evidence.

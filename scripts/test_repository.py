@@ -1,5 +1,6 @@
 """Synthetic Git fixtures for the public repository boundary; no network."""
 from pathlib import Path
+import json
 import shutil
 import subprocess
 import tempfile
@@ -15,7 +16,10 @@ class RepositorySafetyTests(unittest.TestCase):
         self.addCleanup(self.directory.cleanup)
         self.root = Path(self.directory.name)
         for name in package_workshop.DOCUMENTS:
-            (self.root / name).write_text("Fixture\n")
+            if name.endswith('.ipynb'):
+                (self.root / name).write_bytes((package_workshop.ROOT / name).read_bytes())
+            else:
+                (self.root / name).write_text("Fixture\n")
         for name in package_workshop.DIRECTORIES:
             (self.root / name).mkdir()
             (self.root / name / "source.md").write_text("Fixture\n")
@@ -46,6 +50,18 @@ class RepositorySafetyTests(unittest.TestCase):
         self.git("add", "starter-app/source.md")
         path.write_text("Now clean\n")
         with self.assertRaisesRegex(ValueError, "credential pattern"):
+            check_repository.check(self.root)
+
+    def test_staged_notebook_output_rejected_after_worktree_cleanup(self):
+        path = self.root / 'START_HERE.ipynb'
+        clean = path.read_bytes()
+        notebook = json.loads(clean)
+        cell = next(cell for cell in notebook['cells'] if cell['cell_type'] == 'code')
+        cell['execution_count'] = 1
+        path.write_text(json.dumps(notebook))
+        self.git('add', 'START_HERE.ipynb')
+        path.write_bytes(clean)
+        with self.assertRaisesRegex(ValueError, 'Clear notebook outputs'):
             check_repository.check(self.root)
 
     def test_internal_url_is_rejected(self):

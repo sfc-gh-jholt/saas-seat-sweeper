@@ -8,6 +8,12 @@ Flagging a seat is a review status, not vendor cancellation or realized savings.
 
 ## Start here
 
+**Notebook track (local CoCo Desktop):** clone this repository and open [START_HERE.ipynb](START_HERE.ipynb). It combines short instructions, runnable Python/SQL cells and three focused CoCo prompts. Each participant builds their own synthetic dataset, then uses the `snowflake-apps` skill for two deployments. Setup requires explicit account/user checks and fresh confirmation per script; no default connection is used.
+
+Before the session, the facilitator verifies the local Python kernel (`snowflake-connector-python` and `ipykernel`), named connection, Node/npm, delivery CLI, App Runtime eligibility and skill availability. Do not pre-run SQL 01–03 for the notebook track. After participant bootstrap, complete any approved schema-dependent build integration and restricted-user role assignment before the relevant exercise. The notebook's revised opening time budgets are proposed and not yet rehearsed.
+
+**Prepared-data HTML track (reference):** the existing guide below uses administrator-prepared data and the original opening schedule. Choose one track; do not execute both setup paths. The broader guide conversion is not complete.
+
 1. The administrator completes [Fresh-account preflight](admin-preflight.md) before the timer starts. Accounts may begin essentially empty with ACCOUNTADMIN. That role does not guarantee App Runtime eligibility, configured networking, or working local credentials.
 2. Open [the portable HTML guide](lab-guide.html#introduction) for the lab outline and three-hour agenda, then start Module 00. The [introduction source](introduction.md) is also available in Markdown. Within each exercise, use the visible **Prompt CoCo** cards, review **Your decision**, and inspect evidence before marking complete. Expand manual commands only when needed. HTML embeds the canonical prompt files; Markdown links to the same sources.
 3. Clone the facilitator-provided workshop repository at the delivery revision, then open its root in CoCo so it can read the agenda, prompts, reviewer checklists and starter together. A downloaded ZIP is an alternative; open its extracted root. Make application changes in `starter-app/`, not `reference-app/`. The starter has no active reclamation endpoint or required AI credential. Its deployment target is deliberately not configured.
@@ -23,7 +29,9 @@ The full-app scaffold prompt is optional take-home work. AI-object creation, CI/
 
 ## Package contents
 
-- `lab-guide.html`: self-contained participant guide; no hosted asset dependency.
+- `START_HERE.ipynb`: local notebook entry point; no saved outputs or account-specific configuration.
+- `scripts/notebook_lab.py`: guarded first-run bootstrap helper; no connection on import.
+- `lab-guide.html`: self-contained prepared-data reference guide; no hosted asset dependency.
 - `lab-instructions/` and `agenda.json`: canonical participant content and timing.
 - `introduction.md`: lab outline; the HTML landing page adds the agenda directly from `agenda.json`.
 - `dataset-guide.md`: source-table grain, seed construction, governed metric path and optional real-data adaptation; used in Module 01 before deployment.
@@ -52,6 +60,8 @@ From the package root, after installing Python/uv and the documented prerequisit
 python3 scripts/prepare_apps.py
 uv run --project scripts python scripts/build_guide.py
 uv run --project scripts python scripts/qa_validator.py --verbose
+python3 scripts/validate_notebook.py
+python3 scripts/test_notebook.py
 python3 scripts/check_repository.py
 python3 scripts/package_workshop.py
 ```

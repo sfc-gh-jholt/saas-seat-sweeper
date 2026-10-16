@@ -34,7 +34,10 @@ class PackageSafetyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             for name in package_workshop.DOCUMENTS:
-                (root / name).write_text("Fixture\n")
+                if name.endswith('.ipynb'):
+                    (root / name).write_bytes((package_workshop.ROOT / name).read_bytes())
+                else:
+                    (root / name).write_text("Fixture\n")
             for name in package_workshop.DIRECTORIES:
                 (root / name).mkdir()
                 (root / name / "source.md").write_text("Synthetic content\n")

@@ -1,12 +1,12 @@
 # 09 - Ask the same business question
 
-Use CoCo to critique the evidence from a runtime business-question agent, keeping the two assistants' roles and identities distinct.
+Watch an agent answer questions about licenses and contracts, then check what supports its answers.
 
 **Time limit:** 10 minutes, 02:30-02:40. Use 2 minutes for setup/identity, 2 each for three questions, and 2 for evidence review.
 
 ## Action
 
-Observe the facilitator's separately prepared Cortex Agent at the supplied demo account/URL; no fixed destination is in this package. CoCo is your development/operator assistant, not that runtime agent. The participant Ask landing page does not mean you built AI objects or mounted credentials.
+The facilitator will open a separately prepared Cortex Agent. You don't need to create an agent or add credentials to your app. CoCo helps you build software; this agent answers business questions.
 
 The facilitator identifies the semantic view, contract-text Search service and agent, then asks:
 
@@ -14,17 +14,21 @@ The facilitator identifies the semantic view, contract-text Search service and a
 2. Contract text: "What does the Datadog contract say about cancelling seats early?" Check passage and citation when returned.
 3. Combined: "How many inactive Figma assignments could we review, and what contract terms should we check before cancelling them?" Separate SQL result, retrieved clause and interpretation.
 
-[Prompt CoCo: Critique the agent outputs without inventing evidence](../coco-prompts/review-agent-demo.md)
+[Prompt CoCo: Help me check these agent answers](../coco-prompts/review-agent-demo.md)
 
 ## Your decision
 
-Supply only redacted observed outputs. Decide which conclusions the actual SQL/citations support; mark missing evidence rather than accepting a plausible answer. Tool routing, responses, latency and clarification behavior can vary. Contracts are synthetic, not legal advice.
+Give CoCo the demo outputs without secrets. Look for SQL behind the numbers and a contract passage behind the contract answer. If either is missing, say so. Responses can vary, and these sample contracts are not legal advice.
 
 The reference REST route uses a mounted PAT principal/role, not visitor identity; its fallback requires a service token. Ordinary credential-free local development does not automatically enable Ask. Never copy PATs into source, downloads or browser requests. No agent construction or authentication/network relaxation in this slot.
 
 ## Expected evidence
 
-Record one structured result and its SQL, one supporting contract passage/citation if returned, and the distinction between browser, SQL service and agent credential identities. Mark this **observed**, not participant-built. CoCo's critique is not additional proof of a tool call you did not see.
+Note one SQL-backed answer, one contract citation if shown, and one unanswered question. Mark this as a facilitator demo, not something you built.
+
+## Why this matters
+
+The reference agent uses its configured credential identity, not automatically the browser visitor. Never copy its token into a prompt or your source files. The [FAQ](12-honest-faq.md) explains the identity differences.
 
 ## Recovery
 

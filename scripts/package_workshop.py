@@ -8,16 +8,18 @@ from pathlib import Path
 import re
 import zipfile
 
+from validate_notebook import validate_notebook
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCUMENTS = (
-    ".gitignore", "README.md", "introduction.md", "dataset-guide.md", "lab-guide.html", "agenda.json", "scorecard.md",
+    ".gitignore", "START_HERE.ipynb", "README.md", "introduction.md", "dataset-guide.md", "lab-guide.html", "agenda.json", "scorecard.md",
     "admin-preflight.md", "facilitator-guide.md", "deployment-checkpoint.md",
     "teardown-guide.md", "release-checklist.md",
     "validation-results.md", "rehearsal-record.md",
 )
 DIRECTORIES = ("lab-instructions", "coco-prompts", "sql", "starter-app", "reference-app", "checkpoints", "scripts")
-EXCLUDED_PARTS = {"node_modules", ".next", ".git", ".venv", "__pycache__", "dist", ".pytest_cache", ".snowflake", ".cortex", "coverage", "out", "output"}
-EXTENSIONS = {".md", ".json", ".ts", ".tsx", ".js", ".mjs", ".css", ".yml", ".yaml", ".sql", ".svg", ".png", ".py", ".toml", ".lock", ".html"}
+EXCLUDED_PARTS = {"node_modules", ".next", ".git", ".venv", "__pycache__", "dist", ".pytest_cache", ".snowflake", ".cortex", "coverage", "out", "output", ".ipynb_checkpoints"}
+EXTENSIONS = {".ipynb", ".md", ".json", ".ts", ".tsx", ".js", ".mjs", ".css", ".yml", ".yaml", ".sql", ".svg", ".png", ".py", ".toml", ".lock", ".html"}
 PRIVATE = re.compile(r"/Users/|/home/[\w.-]+/|JGH-DEMO|DEMOJHOLTAWSW|NHB17718|fne4qtbp|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|snowflakecomputing\.app", re.I)
 TOKEN = re.compile(r"eyJ[A-Za-z0-9_-]{15,}\.[A-Za-z0-9_-]{15,}\.[A-Za-z0-9_-]{15,}")
 
@@ -58,6 +60,8 @@ def validate(files: dict[str, bytes]) -> None:
         if Path(name).suffix == ".png":
             continue
         text = data.decode("utf-8")
+        if Path(name).suffix == ".ipynb":
+            validate_notebook(data)
         # The scanner itself necessarily contains the patterns it rejects.
         if name == "scripts/package_workshop.py":
             continue

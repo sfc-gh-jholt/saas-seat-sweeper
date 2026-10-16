@@ -1,6 +1,6 @@
 # 02 - Configure your deployment
 
-Have CoCo propose an evidence-backed deployment target before you approve any configuration changes.
+Choose your app's name and review its deployment settings before creating anything in Snowflake.
 
 **Time limit:** 15 minutes, 00:25-00:40. Use 3 minutes for before-state, 7 for proposal/review/setup, and 5 for validation.
 
@@ -12,7 +12,7 @@ Use the participant connection already approved in module 01. Inspect account pr
 
 ## Your decision
 
-Review the exact unused service name, account, role, warehouse, prepared pool/EAI references and artifact destinations. Approve local configuration only after the dry-run matches. If the name exists, choose another approved name and recompute the FQN; do not drop it or call redeployment a first deployment.
+Check that CoCo has the right account, role, warehouse and approved build resources. Choose an unused app name, review the dry-run, then approve the configuration change. If that name already exists, choose another; don't delete an existing app.
 
 [Prompt CoCo: Apply only the reviewed deployment configuration](../coco-prompts/configure-reviewed-target.md)
 
@@ -22,7 +22,11 @@ Keep the lockfile, source and public/static assets in the bundle; exclude `node_
 
 ## Expected evidence
 
-Record absent-target before-state, reviewed configuration diff, approved role/resources, validation result and inspected local bundle. Separate administrator-prepared resources from your changes. `snowflake.yml`'s `definition_version: "2"` is not deployment `app.yml`'s `version: 2`.
+Keep a note of your app's full name and the configuration changes. Check that validation passes and the local bundle includes the source and lockfile, but no credentials. You haven't deployed yet.
+
+## Why this matters
+
+This lab keeps deployment settings in `snowflake.yml` and build steps in `app.yml`. Their version fields mean different things. Use the supplied layout rather than migrating it during the exercise.
 
 ## Recovery
 
