@@ -42,7 +42,7 @@ def validate_notebook(data):
                 if isinstance(node, ast.Assign):
                     for target in node.targets:
                         if isinstance(target, ast.Name) and target.id in {
-                            'connection_name', 'expected_account', 'expected_user'
+                            'connection_name', 'expected_account', 'expected_user', 'participant_app_fqn'
                         }:
                             if not isinstance(node.value, ast.Constant) or not isinstance(node.value.value, str) or not node.value.value.startswith('REPLACE_'):
                                 raise ValueError('Restore notebook connection placeholders before publishing')

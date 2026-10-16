@@ -8,7 +8,7 @@ Flagging a seat is a review status, not vendor cancellation or realized savings.
 
 ## Start here
 
-**Notebook track (local CoCo Desktop):** clone this repository and open [START_HERE.ipynb](START_HERE.ipynb). It combines short instructions, runnable Python/SQL cells and three focused CoCo prompts. Each participant builds their own synthetic dataset, then uses the `snowflake-apps` skill for two deployments. Setup requires explicit account/user checks and fresh confirmation per script; no default connection is used.
+**Notebook track (local CoCo Desktop):** clone this repository and open [START_HERE.ipynb](START_HERE.ipynb). It combines short instructions, runnable Python/SQL cells and four focused CoCo prompts, including runtime diagnosis. Each participant builds their own synthetic dataset, then uses the `snowflake-apps` skill for two deployments. Setup requires explicit account/user checks and fresh confirmation per script; no default connection is used.
 
 Before the session, the facilitator verifies the local Python kernel (`snowflake-connector-python` and `ipykernel`), named connection, Node/npm, delivery CLI, App Runtime eligibility and skill availability. Do not pre-run SQL 01–03 for the notebook track. After participant bootstrap, complete any approved schema-dependent build integration and restricted-user role assignment before the relevant exercise. The notebook's revised opening time budgets are proposed and not yet rehearsed.
 
@@ -31,6 +31,7 @@ The full-app scaffold prompt is optional take-home work. AI-object creation, CI/
 
 - `START_HERE.ipynb`: local notebook entry point; no saved outputs or account-specific configuration.
 - `scripts/notebook_lab.py`: guarded first-run bootstrap helper; no connection on import.
+- `scripts/notebook_runtime.py`: read-only participant status/log checks and backend-gated container samples, with timestamps and units.
 - `lab-guide.html`: self-contained prepared-data reference guide; no hosted asset dependency.
 - `lab-instructions/` and `agenda.json`: canonical participant content and timing.
 - `introduction.md`: lab outline; the HTML landing page adds the agenda directly from `agenda.json`.

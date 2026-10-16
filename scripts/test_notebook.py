@@ -66,9 +66,11 @@ class NotebookTests(unittest.TestCase):
         notebook = validate_notebook((ROOT / 'START_HERE.ipynb').read_bytes())
         validate_links_and_prompts(notebook, ROOT)
         text = '\n'.join(''.join(cell['source']) for cell in notebook['cells'])
-        self.assertEqual(text.count('<!-- prompt:'), 3)
+        self.assertEqual(text.count('<!-- prompt:'), 4)
         self.assertNotIn('%%sql', text)
         self.assertNotIn('workshop-orient', text)
+        for expected in ('135–150', "'status'", "'metrics'", "'logs'", "runtime_backend = 'UNKNOWN'", 'raw SPCS', 'synthetic incident'):
+            self.assertIn(expected, text)
 
     def test_reject_outputs_counts_metadata_ids_and_connection_values(self):
         for change in ('output', 'count', 'metadata', 'id', 'connection', 'duplicate', 'widgets'):

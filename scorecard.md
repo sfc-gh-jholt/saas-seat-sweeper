@@ -45,6 +45,7 @@ A useful delegation has a goal, relevant context, boundaries, and a checkable ou
 
 ## 02-03 - First deployment
 
+- Startup command / build-output dependency / SQL warehouse located in manifests: ______
 - Dry-run values reviewed / bundle exclusions checked: ______
 - Deployment start / finish / elapsed time: ______
 - Actual package and version identifier: ______
@@ -84,7 +85,11 @@ A useful delegation has a goal, relevant context, boundaries, and a checkable ou
 
 ## 08-09 - Operations and observed AI
 
-- Service status / actual auto-suspend seconds / auto-resume: ______
+- Service status / deployed version / instance count / actual auto-suspend seconds / auto-resume: ______
+- Verified backend / container and instance / sample timestamp and age (or blocker): ______
+- CPU and memory usage versus requested/limit / restart observation: ______
+- Log-to-query correlation, or synthetic incident diagnosis and proposed regression test: ______
+- Why RUNNING or HTTP 200 is insufficient evidence of correct data: ______
 - Prior version recorded / rollback execution not required: ______
 - Runtime / warehouse / AI / storage-retention cost owners: ______
 - Historical metering latency or attribution limitation: ______

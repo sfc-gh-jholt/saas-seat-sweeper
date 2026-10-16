@@ -16,6 +16,14 @@ Check that CoCo has the right account, role, warehouse and approved build resour
 
 [Prompt CoCo: Apply only the reviewed deployment configuration](../coco-prompts/configure-reviewed-target.md)
 
+Spend five minutes of this slot tracing the manifests, not just approving their contents:
+
+- In `starter-app/app.yml`, follow dependency installation, build and startup. `npm run build` also runs the static-asset copy script in `package.json`; the Node entrypoint must exist after that build.
+- In the proposed `snowflake.yml`, locate your service target, SQL warehouse, build/runtime resources, network integrations and upload exclusions. Build egress is separate from runtime egress.
+- Predict which phase and log would expose a missing build output or incorrect startup command. Point to the fields before approving setup.
+
+This is an App Runtime manifest walkthrough, not a raw SPCS container-spec exercise. Do not add raw SPCS CPU/memory fields to these files. Compare reported runtime limits and settings during the operations exercise.
+
 Review `identifier.name`, `identifier.database`, `identifier.schema`, `query_warehouse` and resolved resource references. Keep `snowflake.yml` and build-only `app.yml` with install/build/run phases (`npm ci --include=dev`, `npm run build`, `.next/standalone/server.js`). Setup is not app generation. A skipped existing manifest may still contain stale values.
 
 Keep the lockfile, source and public/static assets in the bundle; exclude `node_modules`, `.next`, `.git`, `.env*`, credentials, logs and backups. No facilitator PAT is required. Never upload secrets or create missing build/network prerequisites to finish this slot.
