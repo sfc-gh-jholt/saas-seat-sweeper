@@ -1,0 +1,30 @@
+# Snowflake App Runtime build manifest.
+#
+# Every top-level key is optional -- when app.yml is absent entirely, Snowflake
+# auto-detects install/build/run from the project layout (package.json). But the
+# moment this file exists, be explicit: the `run` command below launches
+# .next/standalone/server.js, which ONLY exists after `next build` has run.
+# Relying on an implicit build while pinning an explicit run command is exactly
+# the kind of half-specified manifest that breaks on a platform upgrade.
+#
+# Snowflake validates this file during the remote build. Invalid YAML or a bad
+# profile.icon path fails the build BEFORE a new package version is published.
+# Names under `secrets` resolve later, at service create/upgrade -- so a bad
+# secret name fails the deploy phase, not the build phase.
+
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+build:
+  commands:
+    - ["npm", "run", "build"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]
+
+profile:
+  label: "SaaS Seat Sweeper"
+  description: "Track SaaS license and hardware asset usage across employees. Identify inactive users, reclaim licenses, and query contract terms with natural language."
+  icon: icon.svg
+

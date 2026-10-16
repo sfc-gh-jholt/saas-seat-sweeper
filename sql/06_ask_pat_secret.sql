@@ -1,0 +1,40 @@
+-- OPTIONAL FACILITATOR RUNBOOK ONLY. Intentionally no executable credential DDL.
+-- Participant starter, first deploy, reclamation, and second deploy need no PAT.
+-- Never run an automatic glob over sql/*.sql.
+--
+-- Preferred fallback: demonstrate the prepared agent in an approved playground.
+-- A local developer connection does not manufacture the mounted service token
+-- needed by the reference route's SQL fallback. An expired mounted PAT does not
+-- automatically fall through to that fallback either.
+--
+-- For a separately approved reference-app SSE demo:
+-- 1. Security administrator chooses a dedicated non-admin service identity,
+--    a least-privilege read-only AI role, and allowed source network path under
+--    EXISTING authentication/network policies. Do not use a participant's or
+--    facilitator's ACCOUNTADMIN credentials. Do not weaken PAT network checks.
+-- 2. Grant only approved warehouse/database/schema usage, SELECT on the three
+--    semantic source views, REFERENCES/SELECT on the semantic view, and USAGE
+--    on the agent and search service, plus the approved Cortex database role.
+--    The current dept_isolation policy matches primary roles explicitly. A new
+--    read-only AI role needs a separately reviewed policy change and scope test;
+--    do not give it the manager role's RAW UPDATE access to bypass that work.
+-- 3. Issue a role-restricted short-lived PAT using the approved credential
+--    administration process; capture the value only in the secure secret store.
+--    Record issuer, allowed role, expiry, revocation owner, and rotation deadline
+--    in PRIVATE delivery evidence, never token values or exports in this repo.
+-- 4. Create a GENERIC_STRING secret through that secure process at
+--    SAAS_SEAT_SWEEPER.APP.SEAT_SWEEPER_PAT in the selected facilitator account.
+--    Grant READ only to the confirmed reference service owner that mounts it.
+--    Mount name SEAT_SWEEPER_PAT resolves to
+--    /secrets/SEAT_SWEEPER_PAT/secret_string for the existing reference route.
+-- 5. If the runtime needs egress, approve only the selected account's Agent API
+--    hostname and required secret binding. Build EAI does not authorize runtime
+--    egress. Do not include private hostnames in the shareable package.
+-- 6. Test issuance, network enforcement, expiry, tool access, and actual endpoint
+--    response before delivery. Revoke/rotate through the same secure process.
+--
+-- If any step fails, use the playground or a labeled recording. No policy bypass,
+-- broad allowlist, copied expired token, or participant credential setup.
+-- The historical token expired 2026-08-26; rotation has NOT been verified.
+-- PAT/service execution identity is NOT the app visitor's identity. App entry,
+-- SQL policy context, and indexed Search content are distinct access boundaries.

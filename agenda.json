@@ -1,0 +1,18 @@
+{
+  "title": "SaaS Seat Sweeper",
+  "modules": [
+    {"id": "00-overview", "title": "Business workflow and outcome", "minutes": 10, "file": "lab-instructions/00-overview.md"},
+    {"id": "01-run-starter", "title": "Inspect and run the starter", "minutes": 15, "file": "lab-instructions/01-run-starter.md"},
+    {"id": "02-configure-deployment", "title": "Configure your deployment", "minutes": 15, "file": "lab-instructions/02-configure-deployment.md"},
+    {"id": "03-deploy-v1", "title": "Deploy version one", "minutes": 25, "file": "lab-instructions/03-deploy-v1.md"},
+    {"id": "04-access", "title": "Prove access boundaries", "minutes": 15, "file": "lab-instructions/04-access.md"},
+    {"id": "05-break", "title": "Break", "minutes": 10, "file": "lab-instructions/05-break.md"},
+    {"id": "06-build-reclamation", "title": "Build reclamation with CoCo", "minutes": 25, "file": "lab-instructions/06-build-reclamation.md"},
+    {"id": "07-deploy-v2", "title": "Deploy version two", "minutes": 20, "file": "lab-instructions/07-deploy-v2.md"},
+    {"id": "08-operate", "title": "Operate what you deployed", "minutes": 15, "file": "lab-instructions/08-operate.md"},
+    {"id": "09-ask-demo", "title": "Ask the same business question", "minutes": 10, "file": "lab-instructions/09-ask-demo.md"},
+    {"id": "10-scorecard", "title": "Compare your actual stack", "minutes": 10, "file": "lab-instructions/10-scorecard.md"},
+    {"id": "11-cleanup", "title": "Cleanup and close", "minutes": 10, "file": "lab-instructions/11-cleanup.md"},
+    {"id": "12-honest-faq", "title": "Honest FAQ", "minutes": 0, "file": "lab-instructions/12-honest-faq.md"}
+  ]
+}

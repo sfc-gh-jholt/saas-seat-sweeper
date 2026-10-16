@@ -1,0 +1,13 @@
+{
+  "files": {
+    "__tests__/api/reclaim.test.ts": "dfd61c672b37a3a9226e1b77d317d344ec68ea3c3474058a6cfc55fab1ff4024",
+    "__tests__/components/reclaim.test.tsx": "1d9694376d103adafcff0f7ad70b65d2b9c3711529da30326231a82293054174",
+    "app/api/reclaim/route.ts": "3499093cfd9419ed9e2a5f73f4dc6894c3717fae05c09661fe43411a763b13d4",
+    "components/inactive-users-card.tsx": "c709ee2ec8a14991e7cfead420244246f5ffe72cb2a0e632ac730002e89181cd",
+    "lib/reclaim.ts": "00e14b90ae8a4a2c77d870525cde00943d2cd7c7298db43f296a1d40987d3708"
+  },
+  "format": 1,
+  "remove": [
+    "__tests__/components/starter.test.tsx"
+  ]
+}

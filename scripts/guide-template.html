@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="snowflake-source" content="cortex-agent-authored">
+  <title>@@TITLE@@</title>
+  <script type="application/json" id="snowflake-report-metadata">@@METADATA@@</script>
+  <style>
+    :root { color-scheme: light dark; --blue: light-dark(#006b99,#75cfff); --line: light-dark(#d7e4ec,#304963); --ink: light-dark(#102e46,#edf6ff); --muted: light-dark(#496177,#b4c7d9); --paper: light-dark(#ffffff,#102236); --wash: light-dark(#f3f8fc,#091727); --amber: light-dark(#825000,#ffd28b); }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; color: light-dark(#1f2937,#e5e7eb); background: light-dark(#fff,#0f172a); line-height: 1.6; }
+    .app { display: flex; min-height: 100vh; }
+    .sidebar { width: 280px; flex-shrink: 0; background: light-dark(#f8fafc,#1e293b); border-right: 1px solid light-dark(#e2e8f0,#334155); padding: 24px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .main { flex: 1; min-width: 0; width: 100%; padding: 40px 48px; max-width: 880px; margin: 0; overflow-wrap: anywhere; }
+    .sidebar h2 { font-size: 16px; margin: 0 0 4px; }
+    .subtitle, .progress-text { font-size: 12px; color: light-dark(#475569,#cbd5e1); }
+    .toolbar { margin: 16px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+    progress { width: 100%; height: 8px; accent-color: #2563eb; }
+    .nav-list { list-style: none; padding: 0; margin: 20px 0 0; }
+    .nav-link { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; text-decoration: none; color: inherit; font-size: 14px; border: 1px solid transparent; }
+    .nav-link:hover, .btn:hover { background: light-dark(#e2e8f0,#334155); }
+    .nav-link.active { background: light-dark(#dbeafe,#1e3a8a); border-color: light-dark(#bfdbfe,#3b82f6); }
+    .nav-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: light-dark(#e2e8f0,#334155); font-size: 11px; font-weight: 600; flex-shrink: 0; }
+    .nav-link.done .nav-num { background: #15803d; color: #fff; }
+    .nav-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+    .nav-dur { font-size: 11px; color: light-dark(#475569,#cbd5e1); }
+    .step { margin-bottom: 48px; }
+    .step[hidden] { display: none; }
+    .step-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid light-dark(#e2e8f0,#334155); }
+    .step-tag { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: light-dark(#2563eb,#93c5fd); }
+    h1.step-title { font-size: 28px; margin: 0 0 8px; line-height: 1.25; }
+    h1, h2, h3, h4, strong { color: light-dark(#0f172a,#f1f5f9); }
+    .step-duration { font-size: 13px; color: light-dark(#475569,#cbd5e1); font-variant-numeric: tabular-nums; }
+    h2 { font-size: 20px; margin: 28px 0 12px; }
+    h3 { font-size: 16px; margin: 20px 0 8px; }
+    p { margin: 12px 0; }
+    ul, ol { padding-left: 24px; }
+    a { color: light-dark(#2563eb,#93c5fd); }
+    pre { background: light-dark(#0f172a,#020617); color: #e2e8f0; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.5; margin: 8px 0 16px; white-space: pre; overflow-wrap: normal; }
+    code { font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; }
+    :not(pre) > code { background: light-dark(#f1f5f9,#1e293b); padding: 2px 5px; border-radius: 4px; font-size: .9em; }
+    blockquote { border-left: 3px solid #2563eb; background: light-dark(#eff6ff,#1e3a8a); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+    details { border: 1px solid light-dark(#e2e8f0,#334155); border-radius: 8px; padding: 12px 16px; margin: 16px 0; }
+    summary { cursor: pointer; font-weight: 600; }
+    .step-nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid light-dark(#e2e8f0,#334155); }
+    .btn { padding: 8px 14px; border-radius: 6px; border: 1px solid light-dark(#cbd5e1,#475569); background: light-dark(#f8fafc,#1e293b); color: inherit; cursor: pointer; font: inherit; font-size: 13px; text-decoration: none; }
+    .btn-primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .copy-button { font-size: 12px; }
+    .table-wrap { overflow-x: auto; max-width: 100%; margin: 16px 0; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid light-dark(#d1d5db,#374151); padding: 8px 12px; text-align: left; font-size: 14px; }
+    th { background: light-dark(#f3f4f6,#1f2937); }
+    img, svg { max-width: 100%; height: auto; }
+    .brand-logo { max-width: 140px; }
+    :focus-visible { outline: 3px solid light-dark(#2563eb,#93c5fd); outline-offset: 3px; }
+    .skip-link { position: absolute; left: -9999px; }
+    .skip-link:focus { position: fixed; left: 12px; top: 12px; background: light-dark(#fff,#0f172a); padding: 10px; z-index: 2; }
+    #copy-status { font-size: 13px; }
+    @media (max-width: 900px) { .app { flex-direction: column; } .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 1px solid light-dark(#e2e8f0,#334155); } .main { padding: 24px clamp(16px,4vw,40px); } }
+    /* The prompt is the workbench's primary action; decisions and proof stay visible. */
+    body { color: var(--ink); background: var(--paper); font-size: 16px; }
+    .sidebar { width: 264px; background: var(--wash); border-color: var(--line); padding: 28px 18px; }
+    .sidebar h2 { font-size: 19px; letter-spacing: -.02em; }
+    .main { max-width: 1040px; padding: 48px clamp(24px,4vw,64px); }
+    .brand-logo { width: 132px; margin-bottom: 20px; }
+    .nav-list { margin-top: 24px; }
+    .journey-label { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin: 22px 10px 6px; }
+    .nav-link { padding: 8px 9px; font-size: 13px; line-height: 1.4; }
+    .nav-num { border-radius: 4px; background: transparent; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .nav-link.active { background: light-dark(#e4f4fd,#173952); border-color: transparent; color: var(--blue); }
+    .nav-link.done .nav-num { color: #fff; }
+    .step-header { border-bottom: 2px solid var(--line); padding-bottom: 24px; margin-bottom: 32px; }
+    .step-tag { color: var(--blue); font-size: 12px; letter-spacing: .12em; }
+    h1.step-title { font-family: 'Avenir Next', 'Segoe UI', sans-serif; font-size: clamp(30px,4vw,44px); letter-spacing: -.035em; line-height: 1.12; margin: 12px 0 16px; max-width: 23ch; }
+    h1, h2, h3, h4, strong { color: var(--ink); }
+    h2 { font-size: 23px; letter-spacing: -.02em; margin-top: 34px; }
+    h3 { font-size: 18px; }
+    .step-outcome { font-size: 19px; line-height: 1.55; max-width: 65ch; }
+    .step-duration { color: var(--muted); font-size: 13px; margin-top: 20px; }
+    .interaction-pattern { color: var(--blue); font-size: 12px; letter-spacing: .02em; margin: 8px 0 0; }
+    .time-guidance { color: var(--muted); font-size: 14px; }
+    .introduction .step-header { border-top: 5px solid #29b5e8; padding-top: 24px; }
+    .introduction .step-header .btn { display: inline-block; margin: 8px 8px 0 0; }
+    .agenda-list { list-style: none; padding: 0; border-top: 1px solid var(--line); }
+    .agenda-list li { display: grid; grid-template-columns: 112px minmax(0,1fr) 54px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .agenda-time, .agenda-duration { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+    .agenda-duration { text-align: right; }
+    @media (max-width: 600px) { .agenda-list li { grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; } .agenda-time { grid-column: 1 / -1; } }
+    a { color: var(--blue); }
+    .prompt-card { border: 1px solid light-dark(#9acbe4,#365f7c); border-left: 5px solid #29b5e8; background: light-dark(#eef8fe,#132e46); padding: clamp(16px,3vw,28px); margin: 28px 0; border-radius: 4px 12px 12px 4px; min-width: 0; }
+    .prompt-label { color: var(--blue); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; font-weight: 750; margin: 0 0 8px; }
+    .prompt-title { font-size: 22px; line-height: 1.3; margin: 0 0 18px; letter-spacing: -.02em; }
+    .prompt-card .prompt-text { color: var(--ink); background: transparent; padding: 0; margin: 18px 0; border-radius: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; line-height: 1.7; }
+    .prompt-text, .prompt-text code { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    .manual-copy { display: block; width: 100%; min-height: 180px; margin: 12px 0; padding: 12px; resize: vertical; font: inherit; color: var(--ink); background: var(--paper); border: 2px solid var(--blue); border-radius: 4px; }
+    .prompt-source { color: var(--muted); font-size: 11px; margin: 16px 0 0; overflow-wrap: anywhere; }
+    .prompt-card .copy-button { background: light-dark(#006b99,#75cfff); color: light-dark(#fff,#091727); border-color: transparent; font-weight: 700; min-height: 44px; }
+    .semantic-panel { margin: 24px 0; padding: 20px 24px; border: 1px solid var(--line); border-left-width: 4px; border-radius: 4px; min-width: 0; }
+    .semantic-panel > :first-child { margin-top: 0; }
+    .semantic-panel > :last-child { margin-bottom: 0; }
+    .panel-decision { border-color: light-dark(#e7bf78,#846232); background: light-dark(#fff9ed,#302719); }
+    .panel-decision > h2, .panel-decision > h3 { color: var(--amber); }
+    .panel-evidence { border-left-color: var(--blue); background: var(--wash); }
+    .panel-recovery { border-left-style: dashed; background: var(--paper); }
+    .command-disclosure { background: var(--wash); border-color: var(--line); padding: 16px 20px; }
+    summary h2, summary h3, summary h4 { display: inline; font: inherit; margin: 0; }
+    details[open] > summary { margin-bottom: 18px; }
+    .btn { min-height: 40px; }
+    .btn-primary { background: light-dark(#006b99,#75cfff); border-color: transparent; color: light-dark(#fff,#091727); }
+    .btn-primary:hover { background: light-dark(#005578,#a4dfff); }
+    .complete[aria-pressed='true'] { background: light-dark(#166534,#85dfa5); color: light-dark(#fff,#092616); }
+    #copy-status:empty { display: none; }
+    #copy-status:not(:empty) { position: sticky; top: 8px; z-index: 1; background: var(--paper); border: 1px solid var(--line); padding: 10px 14px; }
+    :focus-visible { outline-color: var(--blue); }
+    @media (max-width: 900px) { .sidebar { width: 100%; } .main { padding: 28px clamp(16px,4vw,40px); } .nav-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2px 10px; } .journey-label { grid-column: 1 / -1; } }
+    @media (max-width: 420px) { .semantic-panel { padding: 16px; } .step-outcome { font-size: 17px; } .nav-link { padding: 8px 4px; gap: 5px; } }
+    @media print { .sidebar, .step-nav, .copy-button, #copy-status { display: none; } .step[hidden] { display: block; } .main { max-width: none; padding: 0; } pre { white-space: pre-wrap; } }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to instructions</a>
+<div class="app">
+  <aside class="sidebar">
+    @@LOGO@@
+    <h2>@@TITLE@@</h2>
+    <div class="subtitle">@@TOTAL@@ minutes, including break and cleanup</div>
+    <div class="toolbar"><button class="btn" id="theme-toggle" type="button">Theme: system</button><button class="btn" id="reset-progress" type="button">Reset progress</button></div>
+    <progress id="progress" value="0" max="@@COUNT@@" aria-label="Completed timed modules"></progress>
+    <div class="progress-text" id="progress-text" aria-live="polite">0 of @@COUNT@@ timed modules complete</div>
+    <p class="subtitle">Progress stays in this open page only. FAQ is untimed.</p>
+    <nav aria-label="Workshop modules"><ul class="nav-list">@@NAV@@</ul></nav>
+  </aside>
+  <main class="main" id="main" tabindex="-1">
+    <p id="copy-status" role="status" aria-live="polite"></p>
+    @@SECTIONS@@
+  </main>
+</div>
+<script>
+(() => {
+  'use strict';
+  const sections = Array.from(document.querySelectorAll('.step'));
+  const links = Array.from(document.querySelectorAll('.nav-link'));
+  const completeButtons = Array.from(document.querySelectorAll('.complete'));
+  const completed = new Set();
+  const progress = document.getElementById('progress');
+  function showTarget(focus) {
+    let id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (_) { id = ''; }
+    const target = document.getElementById(id);
+    const section = target && target.closest('.step') ||
+      (id === 'main' && sections.find(item => !item.hidden)) || sections[0];
+    sections.forEach(item => { item.hidden = item !== section; });
+    if (target) {
+      for (let ancestor = target.parentElement; ancestor; ancestor = ancestor.parentElement) {
+        if (ancestor.tagName === 'DETAILS') ancestor.open = true;
+      }
+    }
+    links.forEach(link => {
+      const active = link.getAttribute('href') === '#' + section.id;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'step'); else link.removeAttribute('aria-current');
+    });
+    if (focus) {
+      const destination = target && target !== section ? target : section.querySelector('.step-title');
+      if (!destination.hasAttribute('tabindex')) destination.setAttribute('tabindex', '-1');
+      destination.focus({preventScroll: true});
+      destination.scrollIntoView({block: 'start'});
+    }
+  }
+  function updateProgress() {
+    progress.value = completed.size;
+    document.getElementById('progress-text').textContent = completed.size + ' of ' + completeButtons.length + ' timed modules complete';
+    completeButtons.forEach(button => {
+      const done = completed.has(button.dataset.module);
+      button.setAttribute('aria-pressed', String(done));
+      button.textContent = done ? 'Mark incomplete' : 'Mark complete';
+    });
+    links.forEach(link => link.classList.toggle('done', completed.has(link.getAttribute('href').slice(1))));
+  }
+  completeButtons.forEach(button => button.addEventListener('click', () => {
+    const id = button.dataset.module;
+    if (completed.has(id)) completed.delete(id); else completed.add(id);
+    updateProgress();
+  }));
+  document.getElementById('reset-progress').addEventListener('click', () => { completed.clear(); updateProgress(); });
+  const themes = ['system', 'light', 'dark'];
+  let themeIndex = 0;
+  document.getElementById('theme-toggle').addEventListener('click', event => {
+    themeIndex = (themeIndex + 1) % themes.length;
+    document.documentElement.style.colorScheme = themeIndex ? themes[themeIndex] : 'light dark';
+    event.currentTarget.textContent = 'Theme: ' + themes[themeIndex];
+  });
+  document.querySelectorAll('pre > code').forEach(code => {
+    const isPrompt = Boolean(code.closest('.prompt-card'));
+    const kind = isPrompt ? 'Prompt' : 'Code';
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'btn copy-button';
+    button.dataset.copyKind = kind.toLowerCase();
+    button.textContent = isPrompt ? 'Copy prompt' : 'Copy code';
+    code.parentElement.before(button);
+    button.addEventListener('click', async () => {
+      const status = document.getElementById('copy-status');
+      try {
+        await navigator.clipboard.writeText(code.textContent);
+        status.textContent = kind + ' copied.';
+        button.textContent = isPrompt ? 'Copy prompt' : 'Copy code';
+      } catch (_) {
+        // A text selection drops a terminal newline in Chrome. Select a readonly
+        // value instead so manual copying retains the canonical payload exactly.
+        let fallback = code.parentElement.nextElementSibling;
+        if (!fallback || !fallback.classList.contains('manual-copy')) {
+          fallback = document.createElement('textarea');
+          fallback.className = 'manual-copy'; fallback.readOnly = true;
+          fallback.setAttribute('aria-label', kind + ' text for manual copy');
+          fallback.spellcheck = false;
+          code.parentElement.after(fallback);
+        }
+        fallback.value = code.textContent;
+        fallback.focus(); fallback.select();
+        status.textContent = 'Clipboard access unavailable. ' + kind + ' selected; use your keyboard copy command.';
+        button.textContent = isPrompt ? 'Copy prompt' : 'Copy code';
+      }
+    });
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
+    if (link.hash === window.location.hash) {
+      event.preventDefault();
+      showTarget(true);
+    }
+  }));
+  window.addEventListener('hashchange', () => showTarget(true));
+  showTarget(false);
+})();
+</script>
+</body>
+</html>
